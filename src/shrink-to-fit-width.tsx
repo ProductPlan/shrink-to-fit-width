@@ -4,12 +4,14 @@ import { useUpdateEffect } from "usehooks-ts";
 export interface ShrinkToFitWidthProps<T> {
   maxCount: number;
   maxWidth: number;
-  children(data: { ref: MutableRefObject<T>; count: number }): JSX.Element;
-  fallback?: JSX.Element; // What to show if there's no way to get children to fit
+  children(data: {
+    ref: MutableRefObject<T>;
+    count: number | null;
+  }): JSX.Element;
 }
 
 // The state is we're either actively figuring out the count, there is no valid count, or we know the count.
-type ShrinkState = "computing" | "nofit" | number;
+type ShrinkState = "computing" | null | number;
 
 /**
  * Say you have a component that can show N things, but you may want to only render some X < N, width permitting.
@@ -23,7 +25,6 @@ type ShrinkState = "computing" | "nofit" | number;
 export function ShrinkToFitWidth<T extends HTMLDivElement>({
   maxCount,
   maxWidth,
-  fallback,
   children,
 }: ShrinkToFitWidthProps<T>) {
   const [shrinkState, setShrinkState] =
@@ -32,7 +33,7 @@ export function ShrinkToFitWidth<T extends HTMLDivElement>({
     () => void setShrinkState("computing"),
     []
   );
-  const setNoFit = React.useCallback(() => void setShrinkState("nofit"), []);
+  const setNoFit = React.useCallback(() => void setShrinkState(null), []);
 
   if (shrinkState === "computing")
     return (
@@ -45,8 +46,6 @@ export function ShrinkToFitWidth<T extends HTMLDivElement>({
         {children}
       </ShrinkingToFitWidth>
     );
-
-  if (shrinkState === "nofit") return fallback ?? null;
 
   return (
     <ShrunkToFitWidth
@@ -128,7 +127,7 @@ interface ShrunkToFitWidthProps<T> {
   maxCount: number;
   maxWidth: number;
   children(data: { ref: MutableRefObject<T>; count: number }): JSX.Element;
-  count: number;
+  count: number | null;
   onCountInvalidation(): void;
 }
 

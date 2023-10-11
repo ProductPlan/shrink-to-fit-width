@@ -7,8 +7,9 @@
     "moduleResolution": "node",
     "jsx": "react-jsx",
     "lib": ["es6", "dom"],
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": ["cypress", "@testing-library/cypress"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "cypress.d.ts"],
   "exclude": ["node_modules", "lib"]
 }
