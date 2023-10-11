@@ -1,0 +1,8 @@
+{
+  "name": "shrink-to-fit-width",
+  "version": "1.0.0",
+  "description": "Determine the largest 'count' a component can render given limited width",
+  "main": "index.ts",
+  "author": "Patrick Herrmann <patrick@productplan.com>",
+  "license": "MIT"
+}
