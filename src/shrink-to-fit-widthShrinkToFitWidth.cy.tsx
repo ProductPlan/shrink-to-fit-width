@@ -4,6 +4,76 @@ import { ShrinkToFitWidth } from "./shrink-to-fit-width";
 describe("ShrinkToFitWidth", () => {
   it("renders", () => {
     cy.mount(<ShrinkToFitWidthExample />);
+    [
+      "Alabama",
+      "Alaska",
+      "Arizona",
+      "Arkansas",
+      "California",
+      "+ 5 more",
+    ].forEach((s) => {
+      cy.findByText(s).should("exist");
+    });
+  });
+
+  it("reacts to changes in width", () => {
+    cy.mount(<ShrinkToFitWidthExample />);
+
+    // Decreasing to a really small width such that no counts work
+    // should render the component with a "null" count, which it can choose how to render.
+    cy.findByLabelText("Width").type("{selectall}").type("20");
+    cy.findByText("No fit!").should("exist");
+
+    // A slightly larger size is not big enough for any state names but enough to summarize
+    cy.findByLabelText("Width").type("{selectall}").type("100");
+    cy.findByText("10 states").should("exist");
+
+    // With a little more space it will show a couple state names
+    cy.findByLabelText("Width").type("{selectall}").type("200");
+    ["Alabama", "Alaska", "+ 8 more"].forEach((s) => {
+      cy.findByText(s).should("exist");
+    });
+  });
+
+  it("reacts to changes in count", () => {
+    cy.mount(<ShrinkToFitWidthExample />);
+
+    // When the count is increased, more states are relegated to the "more" count
+    cy.findByLabelText("Count").type("{selectall}").type("50");
+    [
+      "Alabama",
+      "Alaska",
+      "Arizona",
+      "Arkansas",
+      "California",
+      "+ 45 more",
+    ].forEach((s) => {
+      cy.findByText(s).should("exist");
+    });
+
+    cy.findByLabelText("Count").type("{selectall}").type("0");
+    cy.findByText("0 states").should("exist");
+
+    cy.findByLabelText("Count").type("{selectall}").type("3");
+    ["Alabama", "Alaska", "Arizona"].forEach((s) => {
+      cy.findByText(s).should("exist");
+    });
+  });
+
+  it("reacts to changes in gap", () => {
+    cy.mount(<ShrinkToFitWidthExample />);
+
+    // Increasing the gap should push one of the states into the "more" count
+    cy.findByLabelText("Gap").type("{selectall}").type("20");
+    [
+      "Alabama",
+      "Alaska",
+      "Arizona",
+      "Arkansas",
+      "+ 6 more",
+    ].forEach((s) => {
+      cy.findByText(s).should("exist");
+    });
   });
 });
 

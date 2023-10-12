@@ -10,6 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "types": ["cypress", "@testing-library/cypress"]
   },
-  "include": ["src/**/*", "cypress.d.ts"],
+  "include": ["src", "cypress.d.ts"],
   "exclude": ["node_modules", "lib"]
 }
