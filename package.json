@@ -2,12 +2,12 @@
   "name": "shrink-to-fit-width",
   "version": "1.0.0",
   "description": "Determine the largest 'count' a component can render given limited width",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/esm/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
   "author": "Patrick Herrmann <patrick@productplan.com>",
   "license": "MIT",
   "private": true,
-  "files":["/lib"],
+  "files":["/dist"],
   "peerDependencies": {
     "react": "16.14.0",
     "react-dom": "16.14.0",
@@ -27,6 +27,7 @@
   },
   "scripts": {
     "test": "yarn run cypress run --component",
-    "build": "yarn run tsc"
+    "build": "yarn run tsc",
+    "prepack": "yarn build"
   }
 }

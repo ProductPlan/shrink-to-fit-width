@@ -6,6 +6,6 @@ export default defineConfig({
       framework: "react",
       bundler: "vite",
     },
-    excludeSpecPattern: ["lib/**/*.js"],
+    excludeSpecPattern: ["dist/**/*.js"],
   },
 });
