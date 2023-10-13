@@ -9,6 +9,7 @@ import React, {
   MutableRefObject,
 } from "react";
 import { useUpdateEffect } from "usehooks-ts";
+import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer"
 
 export interface ShrinkToFitWidthProps<T> {
   maxCount: number;
@@ -186,7 +187,7 @@ function useResizeObserver(
   callback: ResizeObserverCallback
 ) {
   const resizeObserver = useMemo(
-    () => new ResizeObserver(callback),
+    () => new (window.ResizeObserver ?? ResizeObserverPolyfill)(callback),
     [callback]
   );
   useEffect(() => {
