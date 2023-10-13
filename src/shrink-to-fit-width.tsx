@@ -1,4 +1,13 @@
-import React, { MutableRefObject } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+  useMemo,
+  useReducer,
+  MutableRefObject,
+} from "react";
 import { useUpdateEffect } from "usehooks-ts";
 
 export interface ShrinkToFitWidthProps<T> {
@@ -27,8 +36,7 @@ export function ShrinkToFitWidth<T extends HTMLDivElement>({
   maxWidth,
   children,
 }: ShrinkToFitWidthProps<T>) {
-  const [shrinkState, setShrinkState] =
-    React.useState<ShrinkState>("computing");
+  const [shrinkState, setShrinkState] = useState<ShrinkState>("computing");
   const recomputeCount = React.useCallback(
     () => void setShrinkState("computing"),
     []
@@ -78,17 +86,17 @@ function ShrinkingToFitWidth<T extends HTMLElement>({
   onFit,
   onNoFit,
 }: ShrinkingToFitWidthProps<T>) {
-  const ref = React.useRef<T>();
-  const upperBound = React.useRef(maxCount + 1); // Exclusive bound
-  const lowerBound = React.useRef(0); // Inclusive bound
+  const ref = useRef<T>();
+  const upperBound = useRef(maxCount + 1); // Exclusive bound
+  const lowerBound = useRef(0); // Inclusive bound
 
   // Unlike a traditional binary search, start with the max count.
   // This is slightly worse in the general case, but much faster when
   // the max count renders within the max width, which is likely a common case.
-  const [count, setCount] = React.useState(maxCount);
-  const [rerenders, rerender] = React.useReducer((x) => x + 1, 0);
+  const [count, setCount] = useState(maxCount);
+  const [rerenders, rerender] = useReducer((x) => x + 1, 0);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!ref.current) return;
     const { width } = ref.current.getBoundingClientRect();
 
@@ -141,7 +149,7 @@ function ShrunkToFitWidth<T extends HTMLElement>({
   count,
   onCountInvalidation,
 }: ShrunkToFitWidthProps<T>) {
-  const ref = React.useRef<T>();
+  const ref = useRef<T>();
 
   // If the width changes for whatever reason, we need to recompute the count.
   useWidthChangeObserver(ref.current, () => {
@@ -161,11 +169,11 @@ function useWidthChangeObserver(
   element: HTMLElement,
   onWidthChange: () => void
 ) {
-  const originalWidth = React.useMemo(
+  const originalWidth = useMemo(
     () => element?.getBoundingClientRect().width ?? 0,
     [element]
   );
-  const checkResizeForWidthChange = React.useCallback(() => {
+  const checkResizeForWidthChange = useCallback(() => {
     const observedWidth = element.getBoundingClientRect().width;
     if (observedWidth !== originalWidth) onWidthChange();
   }, [element, originalWidth, onWidthChange]);
@@ -177,11 +185,11 @@ function useResizeObserver(
   element: HTMLElement,
   callback: ResizeObserverCallback
 ) {
-  const resizeObserver = React.useMemo(
+  const resizeObserver = useMemo(
     () => new ResizeObserver(callback),
     [callback]
   );
-  React.useEffect(() => {
+  useEffect(() => {
     if (element) resizeObserver.observe(element);
     return () => {
       if (element) resizeObserver.unobserve(element);

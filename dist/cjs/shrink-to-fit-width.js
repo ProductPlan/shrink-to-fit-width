@@ -14,7 +14,7 @@ const usehooks_ts_1 = require("usehooks-ts");
  * within the maximum width.
  */
 function ShrinkToFitWidth({ maxCount, maxWidth, children, }) {
-    const [shrinkState, setShrinkState] = react_1.default.useState("computing");
+    const [shrinkState, setShrinkState] = (0, react_1.useState)("computing");
     const recomputeCount = react_1.default.useCallback(() => void setShrinkState("computing"), []);
     const setNoFit = react_1.default.useCallback(() => void setShrinkState(null), []);
     if (shrinkState === "computing")
@@ -27,15 +27,15 @@ exports.ShrinkToFitWidth = ShrinkToFitWidth;
 // requirement, the onNoFit callback is invoked.
 // See https://en.wikipedia.org/wiki/Binary_search_algorithm#Procedure_for_finding_the_rightmost_element.
 function ShrinkingToFitWidth({ maxCount, maxWidth, children, onFit, onNoFit, }) {
-    const ref = react_1.default.useRef();
-    const upperBound = react_1.default.useRef(maxCount + 1); // Exclusive bound
-    const lowerBound = react_1.default.useRef(0); // Inclusive bound
+    const ref = (0, react_1.useRef)();
+    const upperBound = (0, react_1.useRef)(maxCount + 1); // Exclusive bound
+    const lowerBound = (0, react_1.useRef)(0); // Inclusive bound
     // Unlike a traditional binary search, start with the max count.
     // This is slightly worse in the general case, but much faster when
     // the max count renders within the max width, which is likely a common case.
-    const [count, setCount] = react_1.default.useState(maxCount);
-    const [rerenders, rerender] = react_1.default.useReducer((x) => x + 1, 0);
-    react_1.default.useLayoutEffect(() => {
+    const [count, setCount] = (0, react_1.useState)(maxCount);
+    const [rerenders, rerender] = (0, react_1.useReducer)((x) => x + 1, 0);
+    (0, react_1.useLayoutEffect)(() => {
         if (!ref.current)
             return;
         const { width } = ref.current.getBoundingClientRect();
@@ -70,7 +70,7 @@ function ShrinkingToFitWidth({ maxCount, maxWidth, children, onFit, onNoFit, }) 
 // This simply renders the component at the optimal count and listens for any changes
 // that may require the count to be recomputed.
 function ShrunkToFitWidth({ maxCount, maxWidth, children, count, onCountInvalidation, }) {
-    const ref = react_1.default.useRef();
+    const ref = (0, react_1.useRef)();
     // If the width changes for whatever reason, we need to recompute the count.
     useWidthChangeObserver(ref.current, () => {
         onCountInvalidation();
@@ -83,8 +83,8 @@ function ShrunkToFitWidth({ maxCount, maxWidth, children, count, onCountInvalida
 }
 // Subscribe to width changes to an element
 function useWidthChangeObserver(element, onWidthChange) {
-    const originalWidth = react_1.default.useMemo(() => { var _a; return (_a = element === null || element === void 0 ? void 0 : element.getBoundingClientRect().width) !== null && _a !== void 0 ? _a : 0; }, [element]);
-    const checkResizeForWidthChange = react_1.default.useCallback(() => {
+    const originalWidth = (0, react_1.useMemo)(() => { var _a; return (_a = element === null || element === void 0 ? void 0 : element.getBoundingClientRect().width) !== null && _a !== void 0 ? _a : 0; }, [element]);
+    const checkResizeForWidthChange = (0, react_1.useCallback)(() => {
         const observedWidth = element.getBoundingClientRect().width;
         if (observedWidth !== originalWidth)
             onWidthChange();
@@ -93,8 +93,8 @@ function useWidthChangeObserver(element, onWidthChange) {
 }
 // Subscribe to resizes for an element
 function useResizeObserver(element, callback) {
-    const resizeObserver = react_1.default.useMemo(() => new ResizeObserver(callback), [callback]);
-    react_1.default.useEffect(() => {
+    const resizeObserver = (0, react_1.useMemo)(() => new ResizeObserver(callback), [callback]);
+    (0, react_1.useEffect)(() => {
         if (element)
             resizeObserver.observe(element);
         return () => {
