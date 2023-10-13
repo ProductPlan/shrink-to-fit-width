@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShrinkToFitWidth = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const usehooks_ts_1 = require("usehooks-ts");
 /**
@@ -18,8 +17,8 @@ function ShrinkToFitWidth({ maxCount, maxWidth, children, }) {
     const recomputeCount = react_1.default.useCallback(() => void setShrinkState("computing"), []);
     const setNoFit = react_1.default.useCallback(() => void setShrinkState(null), []);
     if (shrinkState === "computing")
-        return ((0, jsx_runtime_1.jsx)(ShrinkingToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, onFit: setShrinkState, onNoFit: setNoFit, children: children }));
-    return ((0, jsx_runtime_1.jsx)(ShrunkToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, count: shrinkState, onCountInvalidation: recomputeCount, children: children }));
+        return (react_1.default.createElement(ShrinkingToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, onFit: setShrinkState, onNoFit: setNoFit }, children));
+    return (react_1.default.createElement(ShrunkToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, count: shrinkState, onCountInvalidation: recomputeCount }, children));
 }
 exports.ShrinkToFitWidth = ShrinkToFitWidth;
 // Renders the component at strategic counts to find the largest count that fits within the max width.

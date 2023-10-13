@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import React, { MutableRefObject } from "react";
 export interface ShrinkToFitWidthProps<T> {
     maxCount: number;
     maxWidth: number;
@@ -16,4 +16,4 @@ export interface ShrinkToFitWidthProps<T> {
  * count to fill the available space. If you rerender your component and it's now wider, the count may be decreased to stay
  * within the maximum width.
  */
-export declare function ShrinkToFitWidth<T extends HTMLDivElement>({ maxCount, maxWidth, children, }: ShrinkToFitWidthProps<T>): import("react/jsx-runtime").JSX.Element;
+export declare function ShrinkToFitWidth<T extends HTMLDivElement>({ maxCount, maxWidth, children, }: ShrinkToFitWidthProps<T>): React.JSX.Element;

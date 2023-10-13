@@ -1,9 +1,8 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from "react";
 import { ShrinkToFitWidth } from "./shrink-to-fit-width";
 describe("ShrinkToFitWidth", () => {
     it("renders", () => {
-        cy.mount(_jsx(ShrinkToFitWidthExample, {}));
+        cy.mount(React.createElement(ShrinkToFitWidthExample, null));
         [
             "Alabama",
             "Alaska",
@@ -16,7 +15,7 @@ describe("ShrinkToFitWidth", () => {
         });
     });
     it("reacts to changes in width", () => {
-        cy.mount(_jsx(ShrinkToFitWidthExample, {}));
+        cy.mount(React.createElement(ShrinkToFitWidthExample, null));
         // Decreasing to a really small width such that no counts work
         // should render the component with a "null" count, which it can choose how to render.
         cy.findByLabelText("Width").type("{selectall}").type("20");
@@ -31,7 +30,7 @@ describe("ShrinkToFitWidth", () => {
         });
     });
     it("reacts to changes in count", () => {
-        cy.mount(_jsx(ShrinkToFitWidthExample, {}));
+        cy.mount(React.createElement(ShrinkToFitWidthExample, null));
         // When the count is increased, more states are relegated to the "more" count
         cy.findByLabelText("Count").type("{selectall}").type("50");
         [
@@ -52,7 +51,7 @@ describe("ShrinkToFitWidth", () => {
         });
     });
     it("reacts to changes in gap", () => {
-        cy.mount(_jsx(ShrinkToFitWidthExample, {}));
+        cy.mount(React.createElement(ShrinkToFitWidthExample, null));
         // Increasing the gap should push one of the states into the "more" count
         cy.findByLabelText("Gap").type("{selectall}").type("20");
         [
@@ -71,15 +70,36 @@ const ShrinkToFitWidthExample = () => {
     const [width, setWidth] = React.useState(400);
     const [gap, setGap] = React.useState(4);
     const [fontSize, setFontSize] = React.useState(16);
-    return (_jsxs("div", { children: [_jsxs("label", { children: ["Count", _jsx("input", { type: "number", max: 50, min: 0, value: numberOfStates, onChange: (e) => setNumberOfStates(Number(e.target.value)) })] }), _jsx("hr", {}), _jsxs("label", { children: ["Width", _jsx("input", { type: "number", max: 500, min: 0, step: 5, value: width, onChange: (e) => setWidth(Number(e.target.value)) })] }), _jsx("hr", {}), _jsxs("label", { children: ["Gap", _jsx("input", { type: "number", max: 50, min: 0, value: gap, onChange: (e) => setGap(Number(e.target.value)) })] }), _jsx("hr", {}), _jsxs("label", { children: ["Font size", _jsx("input", { type: "number", max: 22, min: 4, value: fontSize, onChange: (e) => setFontSize(Number(e.target.value)) })] }), _jsx("hr", {}), _jsx("div", { style: { background: "#eee", width }, children: _jsx(ShrinkToFitWidth, { maxCount: numberOfStates, maxWidth: width, children: ({ ref, count }) => (_jsx(ExampleContent, { ref: ref, count: numberOfStates, visibleCount: count, gap: gap, fontSize: fontSize })) }) })] }));
+    return (React.createElement("div", null,
+        React.createElement("label", null,
+            "Count",
+            React.createElement("input", { type: "number", max: 50, min: 0, value: numberOfStates, onChange: (e) => setNumberOfStates(Number(e.target.value)) })),
+        React.createElement("hr", null),
+        React.createElement("label", null,
+            "Width",
+            React.createElement("input", { type: "number", max: 500, min: 0, step: 5, value: width, onChange: (e) => setWidth(Number(e.target.value)) })),
+        React.createElement("hr", null),
+        React.createElement("label", null,
+            "Gap",
+            React.createElement("input", { type: "number", max: 50, min: 0, value: gap, onChange: (e) => setGap(Number(e.target.value)) })),
+        React.createElement("hr", null),
+        React.createElement("label", null,
+            "Font size",
+            React.createElement("input", { type: "number", max: 22, min: 4, value: fontSize, onChange: (e) => setFontSize(Number(e.target.value)) })),
+        React.createElement("hr", null),
+        React.createElement("div", { style: { background: "#eee", width } },
+            React.createElement(ShrinkToFitWidth, { maxCount: numberOfStates, maxWidth: width }, ({ ref, count }) => (React.createElement(ExampleContent, { ref: ref, count: numberOfStates, visibleCount: count, gap: gap, fontSize: fontSize }))))));
 };
 const ExampleContent = React.forwardRef(({ count, visibleCount, gap, fontSize }, ref) => {
     if (visibleCount === null)
-        return _jsx("span", { children: "No fit!" });
+        return React.createElement("span", null, "No fit!");
     const includedStateNames = stateNames.slice(0, count);
     const visibleStateNames = includedStateNames.slice(0, visibleCount);
     const hiddenStateNamesCount = count - visibleCount;
-    return (_jsxs("div", { style: { display: "inline-flex", gap, whiteSpace: "nowrap", fontSize }, ref: ref, children: [visibleCount === 0 && _jsx("span", { children: `${count} states` }), visibleStateNames.map((s) => (_jsx("span", { children: s }, s))), hiddenStateNamesCount > 0 && visibleCount > 0 && (_jsx("span", { children: `+ ${hiddenStateNamesCount} more` }))] }));
+    return (React.createElement("div", { style: { display: "inline-flex", gap, whiteSpace: "nowrap", fontSize }, ref: ref },
+        visibleCount === 0 && React.createElement("span", null, `${count} states`),
+        visibleStateNames.map((s) => (React.createElement("span", { key: s }, s))),
+        hiddenStateNamesCount > 0 && visibleCount > 0 && (React.createElement("span", null, `+ ${hiddenStateNamesCount} more`))));
 });
 ExampleContent.displayName = "ExampleContent";
 const stateNames = [

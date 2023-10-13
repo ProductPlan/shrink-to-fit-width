@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const shrink_to_fit_width_1 = require("./shrink-to-fit-width");
 describe("ShrinkToFitWidth", () => {
     it("renders", () => {
-        cy.mount((0, jsx_runtime_1.jsx)(ShrinkToFitWidthExample, {}));
+        cy.mount(react_1.default.createElement(ShrinkToFitWidthExample, null));
         [
             "Alabama",
             "Alaska",
@@ -18,7 +17,7 @@ describe("ShrinkToFitWidth", () => {
         });
     });
     it("reacts to changes in width", () => {
-        cy.mount((0, jsx_runtime_1.jsx)(ShrinkToFitWidthExample, {}));
+        cy.mount(react_1.default.createElement(ShrinkToFitWidthExample, null));
         // Decreasing to a really small width such that no counts work
         // should render the component with a "null" count, which it can choose how to render.
         cy.findByLabelText("Width").type("{selectall}").type("20");
@@ -33,7 +32,7 @@ describe("ShrinkToFitWidth", () => {
         });
     });
     it("reacts to changes in count", () => {
-        cy.mount((0, jsx_runtime_1.jsx)(ShrinkToFitWidthExample, {}));
+        cy.mount(react_1.default.createElement(ShrinkToFitWidthExample, null));
         // When the count is increased, more states are relegated to the "more" count
         cy.findByLabelText("Count").type("{selectall}").type("50");
         [
@@ -54,7 +53,7 @@ describe("ShrinkToFitWidth", () => {
         });
     });
     it("reacts to changes in gap", () => {
-        cy.mount((0, jsx_runtime_1.jsx)(ShrinkToFitWidthExample, {}));
+        cy.mount(react_1.default.createElement(ShrinkToFitWidthExample, null));
         // Increasing the gap should push one of the states into the "more" count
         cy.findByLabelText("Gap").type("{selectall}").type("20");
         [
@@ -73,15 +72,36 @@ const ShrinkToFitWidthExample = () => {
     const [width, setWidth] = react_1.default.useState(400);
     const [gap, setGap] = react_1.default.useState(4);
     const [fontSize, setFontSize] = react_1.default.useState(16);
-    return ((0, jsx_runtime_1.jsxs)("div", { children: [(0, jsx_runtime_1.jsxs)("label", { children: ["Count", (0, jsx_runtime_1.jsx)("input", { type: "number", max: 50, min: 0, value: numberOfStates, onChange: (e) => setNumberOfStates(Number(e.target.value)) })] }), (0, jsx_runtime_1.jsx)("hr", {}), (0, jsx_runtime_1.jsxs)("label", { children: ["Width", (0, jsx_runtime_1.jsx)("input", { type: "number", max: 500, min: 0, step: 5, value: width, onChange: (e) => setWidth(Number(e.target.value)) })] }), (0, jsx_runtime_1.jsx)("hr", {}), (0, jsx_runtime_1.jsxs)("label", { children: ["Gap", (0, jsx_runtime_1.jsx)("input", { type: "number", max: 50, min: 0, value: gap, onChange: (e) => setGap(Number(e.target.value)) })] }), (0, jsx_runtime_1.jsx)("hr", {}), (0, jsx_runtime_1.jsxs)("label", { children: ["Font size", (0, jsx_runtime_1.jsx)("input", { type: "number", max: 22, min: 4, value: fontSize, onChange: (e) => setFontSize(Number(e.target.value)) })] }), (0, jsx_runtime_1.jsx)("hr", {}), (0, jsx_runtime_1.jsx)("div", { style: { background: "#eee", width }, children: (0, jsx_runtime_1.jsx)(shrink_to_fit_width_1.ShrinkToFitWidth, { maxCount: numberOfStates, maxWidth: width, children: ({ ref, count }) => ((0, jsx_runtime_1.jsx)(ExampleContent, { ref: ref, count: numberOfStates, visibleCount: count, gap: gap, fontSize: fontSize })) }) })] }));
+    return (react_1.default.createElement("div", null,
+        react_1.default.createElement("label", null,
+            "Count",
+            react_1.default.createElement("input", { type: "number", max: 50, min: 0, value: numberOfStates, onChange: (e) => setNumberOfStates(Number(e.target.value)) })),
+        react_1.default.createElement("hr", null),
+        react_1.default.createElement("label", null,
+            "Width",
+            react_1.default.createElement("input", { type: "number", max: 500, min: 0, step: 5, value: width, onChange: (e) => setWidth(Number(e.target.value)) })),
+        react_1.default.createElement("hr", null),
+        react_1.default.createElement("label", null,
+            "Gap",
+            react_1.default.createElement("input", { type: "number", max: 50, min: 0, value: gap, onChange: (e) => setGap(Number(e.target.value)) })),
+        react_1.default.createElement("hr", null),
+        react_1.default.createElement("label", null,
+            "Font size",
+            react_1.default.createElement("input", { type: "number", max: 22, min: 4, value: fontSize, onChange: (e) => setFontSize(Number(e.target.value)) })),
+        react_1.default.createElement("hr", null),
+        react_1.default.createElement("div", { style: { background: "#eee", width } },
+            react_1.default.createElement(shrink_to_fit_width_1.ShrinkToFitWidth, { maxCount: numberOfStates, maxWidth: width }, ({ ref, count }) => (react_1.default.createElement(ExampleContent, { ref: ref, count: numberOfStates, visibleCount: count, gap: gap, fontSize: fontSize }))))));
 };
 const ExampleContent = react_1.default.forwardRef(({ count, visibleCount, gap, fontSize }, ref) => {
     if (visibleCount === null)
-        return (0, jsx_runtime_1.jsx)("span", { children: "No fit!" });
+        return react_1.default.createElement("span", null, "No fit!");
     const includedStateNames = stateNames.slice(0, count);
     const visibleStateNames = includedStateNames.slice(0, visibleCount);
     const hiddenStateNamesCount = count - visibleCount;
-    return ((0, jsx_runtime_1.jsxs)("div", { style: { display: "inline-flex", gap, whiteSpace: "nowrap", fontSize }, ref: ref, children: [visibleCount === 0 && (0, jsx_runtime_1.jsx)("span", { children: `${count} states` }), visibleStateNames.map((s) => ((0, jsx_runtime_1.jsx)("span", { children: s }, s))), hiddenStateNamesCount > 0 && visibleCount > 0 && ((0, jsx_runtime_1.jsx)("span", { children: `+ ${hiddenStateNamesCount} more` }))] }));
+    return (react_1.default.createElement("div", { style: { display: "inline-flex", gap, whiteSpace: "nowrap", fontSize }, ref: ref },
+        visibleCount === 0 && react_1.default.createElement("span", null, `${count} states`),
+        visibleStateNames.map((s) => (react_1.default.createElement("span", { key: s }, s))),
+        hiddenStateNamesCount > 0 && visibleCount > 0 && (react_1.default.createElement("span", null, `+ ${hiddenStateNamesCount} more`))));
 });
 ExampleContent.displayName = "ExampleContent";
 const stateNames = [

@@ -1,4 +1,3 @@
-import { jsx as _jsx } from "react/jsx-runtime";
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo, useReducer, } from "react";
 import { useUpdateEffect } from "usehooks-ts";
 /**
@@ -15,8 +14,8 @@ export function ShrinkToFitWidth({ maxCount, maxWidth, children, }) {
     const recomputeCount = React.useCallback(() => void setShrinkState("computing"), []);
     const setNoFit = React.useCallback(() => void setShrinkState(null), []);
     if (shrinkState === "computing")
-        return (_jsx(ShrinkingToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, onFit: setShrinkState, onNoFit: setNoFit, children: children }));
-    return (_jsx(ShrunkToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, count: shrinkState, onCountInvalidation: recomputeCount, children: children }));
+        return (React.createElement(ShrinkingToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, onFit: setShrinkState, onNoFit: setNoFit }, children));
+    return (React.createElement(ShrunkToFitWidth, { maxCount: maxCount, maxWidth: maxWidth, count: shrinkState, onCountInvalidation: recomputeCount }, children));
 }
 // Renders the component at strategic counts to find the largest count that fits within the max width.
 // The largest count is reported via the onFit callback. If there is no count that satisfies the max width
