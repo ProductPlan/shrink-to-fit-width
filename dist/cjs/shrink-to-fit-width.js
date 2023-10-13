@@ -22,11 +22,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ShrinkToFitWidth = void 0;
 const react_1 = __importStar(require("react"));
 const usehooks_ts_1 = require("usehooks-ts");
 const resize_observer_1 = require("@juggle/resize-observer");
+const ResizeObserver = (_a = window.ResizeObserver) !== null && _a !== void 0 ? _a : resize_observer_1.ResizeObserver;
 /**
  * Say you have a component that can show N things, but you may want to only render some X < N, width permitting.
  * Wrap your component with ShrinkToFitWidth and provide the max count (how many things you could show given no width restriction)
@@ -116,7 +118,7 @@ function useWidthChangeObserver(element, onWidthChange) {
 }
 // Subscribe to resizes for an element
 function useResizeObserver(element, callback) {
-    const resizeObserver = (0, react_1.useMemo)(() => { var _a; return new ((_a = window.ResizeObserver) !== null && _a !== void 0 ? _a : resize_observer_1.ResizeObserver)(callback); }, [callback]);
+    const resizeObserver = (0, react_1.useMemo)(() => new ResizeObserver(callback), [callback]);
     (0, react_1.useEffect)(() => {
         if (element)
             resizeObserver.observe(element);

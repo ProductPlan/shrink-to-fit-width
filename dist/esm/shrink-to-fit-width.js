@@ -1,6 +1,8 @@
+var _a;
 import React, { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo, useReducer, } from "react";
 import { useUpdateEffect } from "usehooks-ts";
 import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
+const ResizeObserver = (_a = window.ResizeObserver) !== null && _a !== void 0 ? _a : ResizeObserverPolyfill;
 /**
  * Say you have a component that can show N things, but you may want to only render some X < N, width permitting.
  * Wrap your component with ShrinkToFitWidth and provide the max count (how many things you could show given no width restriction)
@@ -89,7 +91,7 @@ function useWidthChangeObserver(element, onWidthChange) {
 }
 // Subscribe to resizes for an element
 function useResizeObserver(element, callback) {
-    const resizeObserver = useMemo(() => { var _a; return new ((_a = window.ResizeObserver) !== null && _a !== void 0 ? _a : ResizeObserverPolyfill)(callback); }, [callback]);
+    const resizeObserver = useMemo(() => new ResizeObserver(callback), [callback]);
     useEffect(() => {
         if (element)
             resizeObserver.observe(element);

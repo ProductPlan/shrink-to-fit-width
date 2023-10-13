@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@testing-library/cypress": "^10.0.1",
-    "@types/react": "*",
-    "@types/react-dom": "*",
+    "@types/react": "16.14.49",
+    "@types/react-dom": "16.9.20",
     "@vitejs/plugin-react": "^4.1.0",
     "cypress": "^13.3.0",
     "react": "^16.14.0",
