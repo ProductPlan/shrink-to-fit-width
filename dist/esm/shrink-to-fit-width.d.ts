@@ -1,11 +1,11 @@
-import React, { MutableRefObject } from "react";
+import { MutableRefObject } from "react";
 export interface ShrinkToFitWidthProps<T> {
-    maxCount: number;
-    maxWidth: number;
-    children(data: {
-        ref: MutableRefObject<T>;
-        count: number | null;
-    }): JSX.Element;
+  maxCount: number;
+  maxWidth: number;
+  children(data: {
+    ref: MutableRefObject<T>;
+    count: number | null;
+  }): JSX.Element;
 }
 /**
  * Say you have a component that can show N things, but you may want to only render some X < N, width permitting.
@@ -16,4 +16,8 @@ export interface ShrinkToFitWidthProps<T> {
  * count to fill the available space. If you rerender your component and it's now wider, the count may be decreased to stay
  * within the maximum width.
  */
-export declare function ShrinkToFitWidth<T extends HTMLDivElement>({ maxCount, maxWidth, children, }: ShrinkToFitWidthProps<T>): React.JSX.Element;
+export declare function ShrinkToFitWidth<T extends HTMLDivElement>({
+  maxCount,
+  maxWidth,
+  children,
+}: ShrinkToFitWidthProps<T>): JSX.Element;
